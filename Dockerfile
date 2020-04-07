@@ -2,6 +2,7 @@ FROM ubuntu:18.04
 
 COPY collect.sh /
 COPY crontab /etc/cron.d/collect-cron
+COPY docker-entrypoint.sh /
 RUN chmod 0644 /etc/cron.d/collect-cron
 
 RUN apt-get update \
@@ -9,4 +10,4 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-CMD ["cron", "&&", "tail", "-f", "/var/log/cron.log"]
+ENTRYPOINT [ "docker-entrypoint.sh" ]
